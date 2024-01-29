@@ -2,16 +2,26 @@ import React from "react";
 
 export const Header = () => {
   return (
-    <div>
-      <h2 className="mb-2 text-3xl font-bold">
-        Never miss a friend's birthday
+    <section className="max-w-xl">
+      <h2 className="mb-4 text-5xl font-black">
+        Never Miss a Birthday Wish Again!
       </h2>
-      <p>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Corporis,
-        corrupti. Quam inventore unde, delectus hic, eligendi quod, cum sit
-        officia ullam cupiditate porro alias voluptate libero expedita quaerat
-        fuga ipsum.
+      <p className="text-md">
+        Effortlessly schedule personalized email messages for all your contacts.
+        Celebrate every special day, on time, every time, with{" "}
+        <span className="font-bold">wishbday!</span>
       </p>
-    </div>
+      <div className="flex gap-2 mt-4">
+        <a href="/dashboard" className="btn btn-primary">
+          Get Started
+        </a>
+        <a
+          href="https://github.com/paulbgtr/wishbday"
+          className="btn btn-primary"
+        >
+          ⭐ Star on GitHub
+        </a>
+      </div>
+    </section>
   );
 };
