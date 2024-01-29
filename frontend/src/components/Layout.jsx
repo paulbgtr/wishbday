@@ -1,10 +1,14 @@
 import { Navbar } from "./Navbar";
+import { Footer } from "./Footer";
 
-export const Layout = ({ children }) => {
+export const Layout = ({ children, navbar, className }) => {
   return (
     <>
-      <Navbar />
-      <div>{children}</div>
+      {navbar && <Navbar />}
+      <div className={`${className} grid max-w-5xl px-5 py-3 mx-auto`}>
+        {children}
+      </div>
+      <Footer />
     </>
   );
 };
