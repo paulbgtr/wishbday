@@ -1,4 +1,5 @@
 import { createUser, getUserByEmail } from "../db/db.js";
+import bcrypt from "bcryptjs";
 
 class AuthController {
   static async signUp(ctx) {
@@ -15,9 +16,9 @@ class AuthController {
         ctx.throw(400, "User already exists");
       }
 
-      // todo - hash password
+      const hashedPassword = await bcrypt.hash(password, 10);
 
-      const user = await createUser(email, password);
+      const [user] = await createUser(email, hashedPassword);
 
       ctx.body = { user };
     } catch (err) {
