@@ -7,7 +7,8 @@ router.get("/hello", (ctx) => {
   ctx.body = "Hey";
 });
 
-router.post("/sign-up", AuthController.signUp);
-router.post("/sign-in", AuthController.signIn);
+router.post("/auth/sign-up", AuthController.signUp);
+router.post("/auth/sign-in", AuthController.signIn);
+router.get("/auth/me", AuthController.me);
 
 export default router;
