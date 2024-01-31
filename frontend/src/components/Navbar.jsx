@@ -1,75 +1,45 @@
+import { useState, useEffect } from "react";
+
 export const Navbar = () => {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+
+  console.log(isLoggedIn);
+
+  useEffect(() => {
+    const checkAuthStatus = async () => {
+      try {
+        setIsLoading(true);
+
+        const res = await fetch("http://localhost:3000/auth/me", {
+          credentials: "include",
+        });
+
+        console.log(res);
+      } catch (err) {
+        throw new Error(err);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    checkAuthStatus();
+  }, [isLoggedIn]);
+
   return (
     <div className="navbar bg-base-100">
       <div className="navbar-start">
-        <div className="dropdown">
-          <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="w-5 h-5"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M4 6h16M4 12h8m-8 6h16"
-              />
-            </svg>
-          </div>
-          <ul
-            tabIndex={0}
-            className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52"
-          >
-            <li>
-              <a>Item 1</a>
-            </li>
-            <li>
-              <a>Parent</a>
-              <ul className="p-2">
-                <li>
-                  <a>Submenu 1</a>
-                </li>
-                <li>
-                  <a>Submenu 2</a>
-                </li>
-              </ul>
-            </li>
-            <li>
-              <a>Item 3</a>
-            </li>
-          </ul>
-        </div>
         <a className="text-xl btn btn-ghost">wishbday</a>
       </div>
-      <div className="hidden navbar-center lg:flex">
-        <ul className="px-1 menu menu-horizontal">
-          <li>
-            <a>Item 1</a>
-          </li>
-          <li>
-            <details>
-              <summary>Parent</summary>
-              <ul className="p-2">
-                <li>
-                  <a>Submenu 1</a>
-                </li>
-                <li>
-                  <a>Submenu 2</a>
-                </li>
-              </ul>
-            </details>
-          </li>
-          <li>
-            <a>Item 3</a>
-          </li>
-        </ul>
-      </div>
-      <div className="navbar-end">
-        <a className="btn">Button</a>
-      </div>
+      {!isLoading && (
+        <div className="navbar-end">
+          {isLoggedIn ? (
+            <div>todo</div>
+          ) : (
+            <a className="btn btn-primary">Sign In</a>
+          )}
+        </div>
+      )}
     </div>
   );
 };
