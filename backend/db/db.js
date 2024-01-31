@@ -20,5 +20,5 @@ export const createUser = async (email, password) => {
   return await db
     .insert(users)
     .values({ email, password })
-    .returning({ insertedId: users.id });
+    .returning({ id: users.id, email: users.email });
 };
