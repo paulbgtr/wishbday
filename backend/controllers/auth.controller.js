@@ -1,4 +1,4 @@
-import { createUser, getUserByEmail } from "../db/db.js";
+import { createUser, getUserByEmail, getUserById } from "../db/db.js";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 
@@ -57,6 +57,28 @@ class AuthController {
       ctx.body = {
         message: "User logged in successfully",
       };
+    } catch (err) {
+      ctx.throw(500, err.message);
+    }
+  }
+
+  static async me(ctx) {
+    try {
+      const token = ctx.cookies.get("token");
+
+      try {
+        const { userId } = jwt.verify(token, "test");
+
+        const [user] = await getUserById(userId);
+
+        if (!user) {
+          ctx.throw(401, "Not authenticated");
+        }
+
+        ctx.body = { user };
+      } catch (err) {
+        ctx.throw(401, "Not authenticated");
+      }
     } catch (err) {
       ctx.throw(500, err.message);
     }
