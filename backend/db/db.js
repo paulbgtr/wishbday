@@ -16,7 +16,7 @@ export const getUserByEmail = async (email) => {
   return await db.select().from(users).where(eq(users.email, email));
 };
 
-export const getUserById = async (email) => {
+export const getUserById = async (id) => {
   return await db.select().from(users).where(eq(users.id, id));
 };
 
