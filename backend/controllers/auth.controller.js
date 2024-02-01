@@ -32,17 +32,29 @@ class AuthController {
       const { email, password } = ctx.request.body;
 
       if (!email || !password) {
-        ctx.throw(400, "Email and password required");
+        ctx.status = 403;
+        ctx.body = {
+          message: "Email and password required",
+        };
+        return;
       }
 
       const [userExists] = await getUserByEmail(email);
 
       if (!userExists) {
-        ctx.throw(400, "User does not exist");
+        ctx.status = 404;
+        ctx.body = {
+          message: "User does not exist",
+        };
+        return;
       }
 
       if (!(await bcrypt.compare(password, userExists.password))) {
-        ctx.throw(400, "Password is incorrect");
+        ctx.status = 401;
+        ctx.body = {
+          message: "Invalid password",
+        };
+        return;
       }
 
       const token = jwt.sign({ userId: userExists.id }, "test", {
@@ -54,11 +66,16 @@ class AuthController {
         maxAge: 1000 * 60 * 60 * 24 * 7, // 7 days
       });
 
+      ctx.status = 200;
       ctx.body = {
         message: "User logged in successfully",
       };
     } catch (err) {
-      ctx.throw(500, err.message);
+      console.log(err);
+      ctx.status = 500;
+      ctx.body = {
+        message: "Error while signing up",
+      };
     }
   }
 
@@ -72,15 +89,19 @@ class AuthController {
         const [user] = await getUserById(userId);
 
         if (!user) {
-          ctx.throw(401, "Not authenticated");
+          ctx.status = 401;
+          ctx.body = "Not authenticated";
+          return;
         }
+
+        console.log(user);
 
         ctx.body = { user };
       } catch (err) {
         ctx.throw(401, "Not authenticated");
       }
     } catch (err) {
-      ctx.throw(500, err.message);
+      ctx.throw(401, err.message);
     }
   }
 }
