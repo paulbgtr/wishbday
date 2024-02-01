@@ -4,8 +4,6 @@ export const Navbar = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
 
-  console.log(isLoggedIn);
-
   useEffect(() => {
     const checkAuthStatus = async () => {
       try {
@@ -14,6 +12,10 @@ export const Navbar = () => {
         const res = await fetch("http://localhost:3000/auth/me", {
           credentials: "include",
         });
+
+        if (res.status === 200) {
+          setIsLoggedIn(true);
+        }
 
         console.log(res);
       } catch (err) {
@@ -24,7 +26,7 @@ export const Navbar = () => {
     };
 
     checkAuthStatus();
-  }, [isLoggedIn]);
+  }, []);
 
   return (
     <div className="navbar bg-base-100">
@@ -36,7 +38,9 @@ export const Navbar = () => {
           {isLoggedIn ? (
             <div>todo</div>
           ) : (
-            <a className="btn btn-primary">Sign In</a>
+            <a href="/sign-in" className="btn btn-primary">
+              Sign In
+            </a>
           )}
         </div>
       )}
