@@ -1,33 +1,9 @@
-import { useState, useEffect } from "react";
+import useAuth from "../hooks/useAuth";
 import { useNavigate } from "react-router-dom";
 
 export const Navbar = () => {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [isLoading, setIsLoading] = useState(true);
-
+  const { isLoading, isLoggedIn } = useAuth();
   const navigate = useNavigate();
-
-  useEffect(() => {
-    const checkAuthStatus = async () => {
-      try {
-        setIsLoading(true);
-
-        const res = await fetch("http://localhost:3000/auth/me", {
-          credentials: "include",
-        });
-
-        if (res.status === 200) {
-          setIsLoggedIn(true);
-        }
-      } catch (err) {
-        throw new Error(err);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    checkAuthStatus();
-  }, []);
 
   const handleSignOut = async () => {
     const res = await fetch("http://localhost:3000/auth/sign-out", {
