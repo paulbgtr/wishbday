@@ -19,8 +19,6 @@ export const Navbar = () => {
         if (res.status === 200) {
           setIsLoggedIn(true);
         }
-
-        console.log(res);
       } catch (err) {
         throw new Error(err);
       } finally {
@@ -47,7 +45,33 @@ export const Navbar = () => {
       {!isLoading && (
         <div className="navbar-end">
           {isLoggedIn ? (
-            <button onClick={handleSignOut}>Sign Out</button>
+            <div className="flex-none gap-2">
+              <div className="dropdown dropdown-end">
+                <div
+                  tabIndex={0}
+                  role="button"
+                  className="btn btn-ghost btn-circle avatar"
+                >
+                  <div className="w-10 rounded-full">
+                    <img
+                      alt="Tailwind CSS Navbar component"
+                      src="https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png"
+                    />
+                  </div>
+                </div>
+                <ul
+                  tabIndex={0}
+                  className="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52"
+                >
+                  <li>
+                    <a href="/settings">Settings</a>
+                  </li>
+                  <li>
+                    <button onClick={handleSignOut}>Sign Out</button>
+                  </li>
+                </ul>
+              </div>
+            </div>
           ) : (
             <a href="/sign-in" className="btn btn-primary">
               Sign In
