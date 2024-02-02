@@ -79,6 +79,30 @@ class AuthController {
     }
   }
 
+  static async signOut(ctx) {
+    try {
+      const token = ctx.cookies.get("token");
+
+      if (!token) {
+        ctx.status = 401;
+        ctx.body = "Not authenticated";
+        return;
+      }
+
+      ctx.cookies.set("token", "", {
+        expires: new Date(1),
+        path: "/",
+      });
+
+      ctx.status = 200;
+      ctx.body = {
+        message: "You have been successfully signed out",
+      };
+    } catch (err) {
+      ctx.throw(500, err.message);
+    }
+  }
+
   static async me(ctx) {
     try {
       const token = ctx.cookies.get("token");
@@ -93,8 +117,6 @@ class AuthController {
           ctx.body = "Not authenticated";
           return;
         }
-
-        console.log(user);
 
         ctx.body = { user };
       } catch (err) {
