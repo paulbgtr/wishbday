@@ -118,6 +118,7 @@ class AuthController {
           return;
         }
 
+        ctx.status = 200;
         ctx.body = { user };
       } catch (err) {
         ctx.throw(401, "Not authenticated");
