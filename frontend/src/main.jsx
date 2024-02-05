@@ -7,6 +7,7 @@ import SignIn from "./routes/signin";
 import SignUp from "./routes/signup";
 import Dashboard from "./routes/dashboard";
 import ErrorPage from "./routes/errorPage";
+import AddContact from "./routes/addContact";
 
 const router = createBrowserRouter([
   {
@@ -25,6 +26,10 @@ const router = createBrowserRouter([
   {
     path: "/dashboard",
     element: <Dashboard />,
+  },
+  {
+    path: "/contacts/add-contact",
+    element: <AddContact />,
   },
 ]);
 
