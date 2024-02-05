@@ -16,7 +16,7 @@ const Dashboard = () => {
   }
 
   return (
-    <Layout navbar className="min-h-screen">
+    <Layout navbar>
       <div className="hero">
         <div className="text-center hero-content">
           <div className="max-w-md">
@@ -27,7 +27,9 @@ const Dashboard = () => {
               Kickstart the fun by adding some contacts. Let&apos;s transform
               this ghost town into a lively gathering, shall we?
             </p>
-            <button className="btn btn-primary">Bring on the Crowd</button>
+            <a href="/contacts/add-contact" className="btn btn-primary">
+              Bring on the Crowd
+            </a>
           </div>
         </div>
       </div>
