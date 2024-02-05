@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 const useAuth = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+  const [userProfile, setUserProfile] = useState({});
 
   const navigate = useNavigate();
 
@@ -17,6 +18,11 @@ const useAuth = () => {
         });
 
         if (res.status === 200) {
+          const resData = await res.json();
+          const { user } = resData;
+
+          setUserProfile(user);
+
           setIsLoggedIn(true);
         } else {
           setIsLoggedIn(false);
@@ -32,7 +38,7 @@ const useAuth = () => {
     checkAuthStatus();
   }, [navigate]);
 
-  return { isLoggedIn, isLoading };
+  return { isLoggedIn, isLoading, userProfile };
 };
 
 export default useAuth;
