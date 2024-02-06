@@ -1,12 +1,9 @@
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
 
 const useAuth = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [userProfile, setUserProfile] = useState({});
-
-  const navigate = useNavigate();
 
   useEffect(() => {
     const checkAuthStatus = async () => {
@@ -36,7 +33,7 @@ const useAuth = () => {
     };
 
     checkAuthStatus();
-  }, [navigate]);
+  }, []);
 
   return { isLoggedIn, isLoading, userProfile };
 };
